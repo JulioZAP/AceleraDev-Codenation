@@ -95,10 +95,6 @@ def main():
                     st.table(df[colunas_numericas].describe().transpose())
 
         elif options == 'Dados faltantes':
-            st.subheader('Dados faltantes: ')
-            heat = msno.bar(df)
-            st.write(heat)
-            st.pyplot()
             opt = st.radio('Imputar dados faltantes a partir de :', ("Mediana", "Média", "Zero", "Moda"))
             options = st.multiselect('Em quais colunas?', df.columns.tolist())
             if st.button("Imputar dados"):
@@ -119,6 +115,10 @@ def main():
                         elif opt == "Zero":
                             df.fillna({i: 0}, inplace=True)
                         st.success("Valores imputados com sucesso!")
+            st.subheader('Dados faltantes: ')
+            bar = msno.bar(df)
+            st.write(bar)
+            st.pyplot()
 
         elif options == "Correlação":
             st.subheader('Correlação: ')
@@ -166,7 +166,7 @@ def main():
                 col_num_y = st.selectbox('Selecione o valor de y ', colunas_numericas, key='unique')
                 col_color = st.selectbox('Selecione a coluna para cor', colunas)
                 st.markdown('Selecione os valores de x e y')
-                st.markdown(criar_scatterplot(col_num_x, col_num_y, col_color, df))
+                st.write(criar_scatterplot(col_num_x, col_num_y, col_color, df))
 
         elif options == 'Outliers':
             st.subheader('Outliers: ')
